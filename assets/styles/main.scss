@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "variables";
+
+.wrapper {
+  max-width: $page-content;
+  margin: 0 auto;
+  padding: 0 8px;
+}
+
+h1 {
+  font-size: 34px;
+}
