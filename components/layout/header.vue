@@ -4,18 +4,22 @@ const colorMode = useColorMode();
 const changeColor = () => {
   colorMode.preference = colorMode.value === "light" ? "dark" : "light";
 };
-console.log(colorMode.value);
 </script>
 
 <template>
-  <header class="header-component bg-white dark:bg-black dark:text-white">
+  <header class="header-component bg-white dark:bg-[#0b0d0e]">
     <nav class="wrapper header-component_content">
-      <nuxt-link :to="localPath('/')" class="header-component_content__left">
+      <nuxt-link
+        :to="localPath('/')"
+        class="header-component_content__left dark:text-white"
+      >
         <img src="~/assets/icons/laptop_ibook_icon.svg" alt="Momynkul" />
-        <h1>{{ $t("menu.shortname") }}</h1>
+        <h1 class="">{{ $t("menu.shortname") }}</h1>
       </nuxt-link>
 
-      <div class="header-component_content__right">
+      <div
+        class="header-component_content__right text-[#3f3a64] dark:text-[#d1d2d2]"
+      >
         <nuxt-link :to="localPath('/')">{{ $t("menu.home") }}</nuxt-link>
         <nuxt-link :to="localPath('/about')">{{ $t("menu.about") }}</nuxt-link>
         <nuxt-link :to="localPath('/project')">{{
@@ -24,17 +28,28 @@ console.log(colorMode.value);
         <nuxt-link :to="localPath('/contact')">{{
           $t("menu.contact")
         }}</nuxt-link>
-        <!-- <img
-          :src="
-            colorMode.value === 'light'
-              ? require('~/assets/icons/light_mode_icon.svg')
-              : require('~/assets/icons/dark_mode_icon.svg')
-          "
-          alt="light/dark"
-        /> -->
-
+        <button @click="changeColor">
+          <img
+            v-if="colorMode.value === 'light'"
+            src="/assets/icons/light_mode_icon.svg"
+            alt="Dark mode"
+          />
+          <img v-else src="/assets/icons/dark_mode_icon.svg" alt="Light mode" />
+        </button>
         <ElementsLanguageSwitcherComponent />
       </div>
+
+      <svg
+        class="header-component_content__mobile fill-[#8e43e7]"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 50 50"
+        width="40px"
+        height="40px"
+      >
+        <path
+          d="M 0 9 L 0 11 L 50 11 L 50 9 Z M 0 24 L 0 26 L 50 26 L 50 24 Z M 0 39 L 0 41 L 50 41 L 50 39 Z"
+        />
+      </svg>
     </nav>
   </header>
 </template>
@@ -60,8 +75,8 @@ console.log(colorMode.value);
 
     &__right {
       font-size: 1.2em;
-      color: $heading-color;
-      & > * {
+
+      > *:not(:last-child):not(:nth-last-child(2)) {
         transition: 0.4s ease;
         &::after {
           content: "";
@@ -77,6 +92,19 @@ console.log(colorMode.value);
             width: 100%;
           }
         }
+      }
+
+      @media screen and (max-width: 760px) {
+        display: none;
+      }
+    }
+
+    &__mobile {
+      display: none;
+      cursor: pointer;
+
+      @media screen and (max-width: 760px) {
+        display: block;
       }
     }
   }
